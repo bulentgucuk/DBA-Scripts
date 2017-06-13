@@ -1,0 +1,25 @@
+Importing the Results.TXT File into SQL Server
+
+In SQL Server Management Studio;
+
+Right-click on the database where you want to store the SQLIO performance data and click Tasks, Import Data.
+
+For Data Source, choose "Flat File Source".
+
+Browse to your results.txt file.
+
+Set the Format to Delimited, Text Qualifier to None, Header row delimiter to {CR}{LF}, and Header Rows to Skip to 0.
+
+Click on the Advanced tab on the left, and there should only be one column, Column 0.
+
+Set the DataType to text stream.
+
+Click Next.
+
+Your database server and storage database should be shown. Click Next.
+
+For the Destination Table, choose SQLIO_Import and click Edit Mappings.
+
+Set the Column 0 destination to be ResultText. Click OK, and click Next.
+
+Click Next until the wizard finishes and imports the data, and then close the wizard.

@@ -1,0 +1,4 @@
+ssbdiagnose -E -S SQLCLR07-P -d SOCPlatform CONFIGURATION FROM SERVICE ApplicationAuditRcvSvc TO SERVICE ApplicationAuditSndSvc > N:\ApplicationAuditSvc.TXT
+ssbdiagnose -E -S SQLCLR07-P -d SOCPlatform CONFIGURATION FROM SERVICE ChatAuditRcvSvc TO SERVICE  ChatAuditSndSvc > N:\ChatAuditSvc.TXT
+ssbdiagnose -E -S SQLCLR07-P -d SOCPlatform CONFIGURATION FROM SERVICE InventoryScanRcvSvc TO SERVICE  InventoryScanSndSvc > N:InventoryScanSvc.TXT
+ssbdiagnose -E -S SQLCLR07-P -d SOCPlatform CONFIGURATION FROM SERVICE KnowledgeAuditRcvSvc TO SERVICE  KnowledgeAuditSndSvc > N:\KnowledgeAuditSvc.TXT

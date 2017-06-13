@@ -1,0 +1,9 @@
+$Path = "E:\SQLServer\backup"
+ 
+$Daysback = "-5"
+ 
+$CurrentDate = Get-Date
+ 
+$DatetoDelete = $CurrentDate.AddDays($Daysback)
+ 
+Get-ChildItem $Path -Recurse -include *.txt, *.bak| Where-Object { $_.LastWriteTime -lt $DatetoDelete } | Remove-Item

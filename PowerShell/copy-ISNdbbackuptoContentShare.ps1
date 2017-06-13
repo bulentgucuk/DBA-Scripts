@@ -1,0 +1,1 @@
+Get-Childitem X:\Backups\UserDatabases\ISN_DB_Full*.bak | where {$_.CreationTime -gt (Get-Date).AddDays(-1) } | Copy-Item -Destination \\Content2\Backup

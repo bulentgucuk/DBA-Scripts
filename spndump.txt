@@ -1,0 +1,46 @@
+##setspn -x >c:\bulent\spndump.txt
+
+Checking domain DC=SERVICESOURCE,DC=com
+Processing entry 73
+HOST/nashvill-ah1.servicesource.com is registered on these accounts:
+	CN=NASHVILL-AH1\0ACNF:a1973c95-1e84-4c07-a70c-617e800a717e,CN=Computers,DC=SERVICESOURCE,DC=com
+	CN=NASHVILL-AH1,CN=Computers,DC=SERVICESOURCE,DC=com
+
+HOST/NETAPP_CSTARNES.SERVICESOURCE.COM is registered on these accounts:
+	CN=NETAPP_CSTARNES,OU=TODELETE,OU=NAS,DC=SERVICESOURCE,DC=com
+	CN=NETAPP_CSTARNES,OU=VMWare,OU=NAS,DC=SERVICESOURCE,DC=com
+
+MSSQLSvc/COLOBIPPRDSQL02.SERVICESOURCE.com:1433 is registered on these accounts:
+	CN=COLOBIPPRDSQL02,OU=Apps,OU=Servers,OU=COLO,DC=SERVICESOURCE,DC=com
+	CN=BOSQL Service,OU=BusObjects,DC=SERVICESOURCE,DC=com
+
+MSSQLSvc/COLOBIPPRDSQL02.SERVICESOURCE.com is registered on these accounts:
+	CN=COLOBIPPRDSQL02,OU=Apps,OU=Servers,OU=COLO,DC=SERVICESOURCE,DC=com
+	CN=BOSQL Service,OU=BusObjects,DC=SERVICESOURCE,DC=com
+
+MSSQLSvc/COLOCRMPRDSQL04.SERVICESOURCE.com:1433 is registered on these accounts:
+	CN=COLOCRMPRDSQL04,OU=Secure Client 01,OU=Servers,OU=COLO,DC=SERVICESOURCE,DC=com
+	CN=Apps Administrator,CN=Users,DC=SERVICESOURCE,DC=com
+
+MSSQLSvc/COLOCRMPRDSQL04.SERVICESOURCE.com is registered on these accounts:
+	CN=COLOCRMPRDSQL04,OU=Secure Client 01,OU=Servers,OU=COLO,DC=SERVICESOURCE,DC=com
+	CN=Apps Administrator,CN=Users,DC=SERVICESOURCE,DC=com
+
+MSSQLSvc/COLOBIZOPSQL01.SERVICESOURCE.COM:1433 is registered on these accounts:
+	CN=COLOBIZOPSQL01,OU=Apps,OU=Servers,OU=COLO,DC=SERVICESOURCE,DC=com
+	CN=bizops sqlserversvc01,OU=Service Accounts,OU=COLO,DC=SERVICESOURCE,DC=com
+
+MSSQLSvc/COLOBIZOPSQL01.SERVICESOURCE.COM is registered on these accounts:
+	CN=COLOBIZOPSQL01,OU=Apps,OU=Servers,OU=COLO,DC=SERVICESOURCE,DC=com
+	CN=bizops sqlserversvc01,OU=Service Accounts,OU=COLO,DC=SERVICESOURCE,DC=com
+
+MSSQLSvc/SFONETAPPSQL04.SERVICESOURCE.com:1433 is registered on these accounts:
+	CN=SFONETAPPSQL04,OU=Dev,OU=Servers,OU=SFO,DC=SERVICESOURCE,DC=com
+	CN=CRMAdmin Prd,OU=ServiceAccounts,OU=CRM,DC=SERVICESOURCE,DC=com
+
+MSSQLSvc/SFONETAPPSQL04.SERVICESOURCE.com is registered on these accounts:
+	CN=SFONETAPPSQL04,OU=Dev,OU=Servers,OU=SFO,DC=SERVICESOURCE,DC=com
+	CN=CRMAdmin Prd,OU=ServiceAccounts,OU=CRM,DC=SERVICESOURCE,DC=com
+
+found 10 groups of duplicate SPNs.
+

@@ -1,0 +1,79 @@
+
+USE msdb
+GO
+
+
+DECLARE @CutOff     DATETIME
+SELECT @CutOff = '20130101' --DATEADD(MONTH, -2, GETDATE())
+
+SELECT  Backup_Set_ID,
+        Media_Set_ID 
+    INTO #BackupSet
+    FROM dbo.backupset
+    WHERE backup_finish_date < @CutOff;
+
+--drop table #backupset
+
+-- -----------------------------------------------------------------------------------
+    
+--DELETE dbo.sysjobhistory
+--    WHERE DBAdmin.dbo.fn_Combine_JobHistory_DateTime(run_date, run_time) < @CutOff
+    
+-- -----------------------------------------------------------------------------------
+
+DELETE dbo.restorefile
+    WHERE restore_history_id IN (SELECT restore_history_id
+                                     FROM dbo.restorehistory
+                                     WHERE backup_set_id IN (SELECT Backup_Set_ID
+                                                                 FROM #BackupSet))
+                                                                 
+-- -----------------------------------------------------------------------------------
+
+DELETE dbo.restorefilegroup
+    WHERE restore_history_id IN (SELECT restore_history_id
+                                     FROM dbo.restorehistory
+                                     WHERE backup_set_id IN (SELECT Backup_Set_ID
+                                                                 FROM #BackupSet))
+                                                                 
+-- -----------------------------------------------------------------------------------
+
+DELETE dbo.restorehistory
+    WHERE backup_set_id IN (SELECT Backup_Set_ID
+                                FROM #BackupSet)
+
+-- -----------------------------------------------------------------------------------
+
+DELETE dbo.backupfile
+    WHERE backup_set_id IN (SELECT Backup_Set_ID
+                                FROM #BackupSet)
+
+-- -----------------------------------------------------------------------------------
+                                
+DELETE dbo.backupfilegroup
+    WHERE backup_set_id IN (SELECT Backup_Set_ID
+                                FROM #BackupSet)
+
+-- -----------------------------------------------------------------------------------
+
+DELETE dbo.backupmediafamily
+    WHERE media_set_id IN (SELECT Media_Set_ID
+                               FROM #BackupSet)
+
+-- -----------------------------------------------------------------------------------
+
+DELETE dbo.backupset
+    WHERE backup_set_id IN (SELECT backup_set_id
+                                FROM #BackupSet)
+
+-- -----------------------------------------------------------------------------------
+
+DELETE dbo.backupmediaset
+    WHERE media_set_id IN (SELECT Media_Set_ID
+                               FROM #BackupSet)
+
+-- -----------------------------------------------------------------------------------
+
+DELETE dbo.backupset
+    WHERE backup_finish_date < @CutOff
+
+-- -----------------------------------------------------------------------------------

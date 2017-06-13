@@ -1,0 +1,5 @@
+This file is used to determine the correct offset for the filename returned in the DIR command in pr_GOIDBA_Loader.
+
+The filename must start with ~~, and the file must be copied along with the other files.
+
+If this file isnt here, or is renamed, the Loader process will be broken.

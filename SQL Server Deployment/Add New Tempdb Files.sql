@@ -1,0 +1,69 @@
+ALTER DATABASE Tempdb 
+ADD FILE 
+(
+    NAME = tempdev1,
+    FILENAME = 'G:\MSSQL10_50.MSSQLSERVER\MSSQL\Data\tempdb1.ndf',
+    SIZE = 5120MB,
+    MAXSIZE = 15360MB,
+    FILEGROWTH = 5120MB
+)
+go
+ALTER DATABASE Tempdb 
+ADD FILE 
+(
+    NAME = tempdev2,
+    FILENAME = 'G:\MSSQL10_50.MSSQLSERVER\MSSQL\Data\tempdb2.ndf',
+    SIZE = 5120MB,
+    MAXSIZE = 15360MB,
+    FILEGROWTH = 5120MB
+)
+go
+ALTER DATABASE Tempdb 
+ADD FILE 
+(
+    NAME = tempdev3,
+    FILENAME = 'G:\MSSQL10_50.MSSQLSERVER\MSSQL\Data\tempdb3.ndf',
+    SIZE = 5120MB,
+    MAXSIZE = 15360MB,
+    FILEGROWTH = 5120MB
+)
+go
+ALTER DATABASE Tempdb 
+ADD FILE 
+(
+    NAME = tempdev4,
+    FILENAME = 'G:\MSSQL10_50.MSSQLSERVER\MSSQL\Data\tempdb4.ndf',
+    SIZE = 5120MB,
+    MAXSIZE = 15360MB,
+    FILEGROWTH = 5120MB
+)
+go
+ALTER DATABASE Tempdb 
+ADD FILE 
+(
+    NAME = tempdev5,
+    FILENAME = 'G:\MSSQL10_50.MSSQLSERVER\MSSQL\Data\tempdb5.ndf',
+    SIZE = 5120MB,
+    MAXSIZE = 15360MB,
+    FILEGROWTH = 5120MB
+)
+go
+ALTER DATABASE Tempdb 
+ADD FILE 
+(
+    NAME = tempdev6,
+    FILENAME = 'G:\MSSQL10_50.MSSQLSERVER\MSSQL\Data\tempdb6.ndf',
+    SIZE = 5120MB,
+    MAXSIZE = 15360MB,
+    FILEGROWTH = 5120MB
+)
+go
+ALTER DATABASE Tempdb 
+ADD FILE 
+(
+    NAME = tempdev7,
+    FILENAME = 'G:\MSSQL10_50.MSSQLSERVER\MSSQL\Data\tempdb7.ndf',
+    SIZE = 5120MB,
+    MAXSIZE = 15360MB,
+    FILEGROWTH = 5120MB
+)

@@ -1,0 +1,13 @@
+USE master;  
+GO
+
+ALTER DATABASE Advatar SET OFFLINE WITH ROLLBACK IMMEDIATE;
+GO
+
+ALTER DATABASE Advatar SET ONLINE;
+GO
+
+-- Reverting AdventureWorks to AdventureWorks_dbss1800  
+RESTORE DATABASE Advatar FROM
+DATABASE_SNAPSHOT = 'Advatar_SnapShot_20161006_1302';
+GO

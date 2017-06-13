@@ -1,0 +1,14 @@
+#load SQL snap-in
+Add-PSSnapin *SQL* 
+
+#pull the current date
+$date = Get-Date -Format yyyyddMM_hhmmss 
+
+#set location for the backup files
+$directory = "C:\temp\" 
+
+#Grab the database names, excluding those in Simple Recovery Model
+$dbname = dir 'SQLSERVER:\SQL\KRINGER\DEFAULT\Databases' | where {$_.RecoveryModel -notmatch "Simple"} | Select Name 
+
+#Backup each log of user database found, not in SIMPLE recovery.
+$dbname | foreach { $_.Name.ToString() } | foreach { $bakfile = "$directory" + $_ + "_" + $date + ".trn"; "Backing up LOG of Database: $_"; Invoke-Sqlcmd -SuppressProviderContextWarning -Query "BACKUP LOG $_ TO DISK=N'$bakfile' WITH INIT";}

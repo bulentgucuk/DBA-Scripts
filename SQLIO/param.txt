@@ -1,0 +1,3 @@
+c:\testfile.dat 2 0x0 2048
+#I:\testfile.dat 2 0x0 20480
+#d:\testfile.dat 2 0x0 100

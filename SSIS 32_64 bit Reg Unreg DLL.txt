@@ -1,0 +1,42 @@
+64 Bit DLL Folder Location:
+
+Example -->  C:\Program Files\Microsoft SQL Server\90\DTS\Binn
+
+32 Bit DLL Folder Location:
+
+Example --> C:\Program Files (x86)\Microsoft SQL Server\90\DTS\Binn
+
+ 
+
+To run the commands to unregister and register the DLL's go to "Start" / "Run" and enter the following commands below.  The DLL's should be unregistered first and then registered.
+
+To Unregister a 64 Bit DLL use the following command below:
+
+regsvr32 /u "location of the DLL"     ie:  regsvr32 /u  "C:\Program Files\Microsoft SQL Server\90\DTS\Binn\DTS.dll"  
+
+To Register a 64 Bit DLL use the following command below:
+
+regsvr32 "location of the DLL"     ie:  regsvr32 "C:\Program Files\Microsoft SQL Server\90\DTS\Binn\DTS.dll"  
+
+ 
+
+To Unregister a 32 Bit DLL use the following command below:
+
+regsvr32 /u "location of the DLL"     ie:  regsvr32 /u  "C:\Program Files (x86)\Microsoft SQL Server\90\DTS\Binn\DTS.dll"  
+
+ To Register a 32 Bit DLL use the following command below:
+
+regsvr32 "location of the DLL"     ie:  regsvr32 "C:\Program Files (x86)\Microsoft SQL Server\90\DTS\Binn\DTS.dll"  
+
+ 
+
+BIS 8 Key DLL's
+
+1. DTS.dll
+2. DTSComExprEval.dll
+3. DtsConn.dll
+4. DTSLog.dll
+5. DTSPipeline.dll
+6. ExecPackageTask.dll
+7. MsDtsSrvrUtil.dll
+8. SQLTaskConnections.dll
