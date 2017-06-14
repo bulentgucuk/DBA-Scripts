@@ -1,0 +1,53 @@
+git status
+git pull
+
+git branch -- list the branches local
+git branch -r list the remote branches
+git branch --merged lists the local branches merged to master
+git branch -r --merged lists the remote branches merged to master
+
+git branch "branch_name" -d deletes the local branch
+
+git branch -dr "branch_name" deletes REMOTE branchgit 
+
+git branch BE-2735 origin/BE-2735 -- Branch BE-2735 set up locally to track remote branch BE-2735 from origin
+
+git checkout BE-2735 -- checkout and switch to branch
+
+git branch --all list all the branches include the ones in the remote
+
+* is the one that the head is pointed to
+
+git checkout branchame -- switch to the branch
+
+
+git show-ref master  -- shows reference sha1 to all branches with name master in it
+
+
+
+git add -- adds the contents to the local working copy (index)
+git status -- shows the working tree status
+git commit -m "My commit message" -- commites changes to the repository with the message added
+
+git log -1  -- returns the latest commit log record
+
+git push  -- pushes the updates to the remote repository
+
+
+to minimize the conflich "fetch" and "merge" (which pull does that) on local, and then "push"
+
+
+git pull
+
+git status
+
+git add Astro/SystemLogging/Scripts/RichRelevanceProductFeedLog.sql  -- adds the contents to the local working copy (index)
+
+git commit -m "Update to dbo.RichRelevanceProductFeedLog table after the review removing LOB out of row storage" 
+
+git push  -- pushes the updates to the remote repository
+
+git status
+
+git log -2
+
