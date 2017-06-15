@@ -2,6 +2,7 @@
 SELECT	r.[session_id],
 		c.[client_net_address],
 		s.[host_name],
+		DB_NAME(r.database_id) AS 'database_name',
 		c.[connect_time],
 		[request_start_time] = s.[last_request_start_time],
 		[current_time] = CURRENT_TIMESTAMP,
@@ -15,4 +16,5 @@ FROM	sys.dm_exec_requests AS r
 	INNER JOIN   sys.dm_exec_sessions AS s
 		ON r.[session_id] = s.[session_id]
 	CROSS APPLY   sys.dm_exec_sql_text(r.[sql_handle]) AS t
-WHERE   r.[percent_complete] <> 0;
+WHERE   R.session_id <> @@SPID
+AND		r.[percent_complete] <> 0;
