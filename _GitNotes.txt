@@ -6,6 +6,10 @@ git branch -r list the remote branches
 git branch --merged lists the local branches merged to master
 git branch -r --merged lists the remote branches merged to master
 
+git checkout -b test1 -- create a local branch named test1
+git push -u origin  HEAD:refs/heads/test1 -- push local branch named test1 up to git origin so that other can now pull and work
+git push origin --delete test1 -- delete remote branch named test1
+
 git branch "branch_name" -d deletes the local branch
 
 git branch -dr "branch_name" deletes REMOTE branchgit 
