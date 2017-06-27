@@ -1,4 +1,0 @@
-USE [master]
-GO
-ALTER DATABASE [model] MODIFY FILE ( NAME = N'modeldev', FILEGROWTH = 256MB)
-GO

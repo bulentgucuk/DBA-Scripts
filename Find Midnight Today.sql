@@ -1,2 +1,0 @@
--- Find Midnight Today
-SELECT CAST(DATEDIFF(DAY, 0, GETDATE()) AS DATETIME)
