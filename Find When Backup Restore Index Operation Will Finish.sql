@@ -17,4 +17,5 @@ FROM	sys.dm_exec_requests AS r
 		ON r.[session_id] = s.[session_id]
 	CROSS APPLY   sys.dm_exec_sql_text(r.[sql_handle]) AS t
 WHERE   R.session_id <> @@SPID
-AND		r.[percent_complete] <> 0;
+AND		r.[percent_complete] <> 0
+OPTION(RECOMPILE);
