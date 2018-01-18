@@ -8,7 +8,7 @@ DECLARE
 SELECT
 	@SchemeName ='',
 	@TableName = '',-- CHANGE THE TABLE NAME OR PASS EMPTY STRING FOR ALL
-	@Sort =5,
+	@Sort =1,
 	@Delimiter =','
 
 SELECT
@@ -91,6 +91,7 @@ ORDER BY
 		WHEN 3 THEN sys.dm_db_missing_index_details.equality_columns
 		ELSE NULL
 	END
+OPTION(RECOMPILE)
 GO
 --*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
 

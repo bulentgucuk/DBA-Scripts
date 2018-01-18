@@ -1,3 +1,4 @@
+https://github.com/dahlbyk/posh-git
 POWERSHELL command -- import-module posh-git
 
 git status
