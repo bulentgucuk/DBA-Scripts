@@ -1,0 +1,38 @@
+USE [DBA]
+GO
+
+/****** Object:  Table [dbo].[PLE]    Script Date: 2/5/2018 4:29:02 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[PLE](
+	[PleID] [bigint] IDENTITY(1,1) NOT NULL,
+	[ServerName] [varchar](32) NOT NULL,
+	[ObjectNamme] [varchar](32) NOT NULL,
+	[NumaNode] [char](3) NOT NULL,
+	[PageLifeExpectancy] [int] NOT NULL,
+	[CreatedDate] [datetime] NOT NULL,
+ CONSTRAINT [PK_dbo_PLE_PleID] PRIMARY KEY NONCLUSTERED 
+(
+	[PleID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 100, DATA_COMPRESSION = PAGE) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[PLE] ADD  CONSTRAINT [DF_dbo_PLE_CreatedDate]  DEFAULT (getdate()) FOR [CreatedDate]
+GO
+
+
+USE [DBA]
+GO
+
+/****** Object:  Index [CIX_dbo_PLE_CreatedDate]    Script Date: 2/5/2018 4:29:17 PM ******/
+CREATE CLUSTERED INDEX [CIX_dbo_PLE_CreatedDate] ON [dbo].[PLE]
+(
+	[CreatedDate] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 100, DATA_COMPRESSION = PAGE) ON [PRIMARY]
+GO
+

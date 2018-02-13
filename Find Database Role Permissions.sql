@@ -1,7 +1,7 @@
 -- Change the database context
 -- Prints the script to create the existing role, permissions and members
 DECLARE @roleName VARCHAR(255)
-SET @roleName = 'BI_GROUP'
+SET @roleName = 'db_SSBDeveloper'
 
 -- Script out the Role
 DECLARE @roleDesc VARCHAR(MAX), @crlf VARCHAR(2)
