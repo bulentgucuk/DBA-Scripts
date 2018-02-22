@@ -1,7 +1,7 @@
 SELECT pr.*
 FROM sys.database_principals AS pr
 where	pr.type <> 'R'
-and		pr.name in ('afalkson_monumentalsports.com')
+and		pr.name like 'Rmahendrakumar%'
 
 
 --List Database Roles and it's members
@@ -14,7 +14,7 @@ JOIN sys.database_principals m
   ON rm.member_principal_id = m.principal_id
 WHERE 1=1
 --AND r.name IN ('loginmanager', 'dbmanager')
-AND m.name LIKE '%afalkson_monumentalsports%'
+AND m.name LIKE 'jkoette%'
 ; 
 
 --List permissions on schemas for database roles
@@ -26,7 +26,5 @@ JOIN sys.database_principals AS Prin
 ON Perm.major_id = Prin.principal_id AND class_desc = 'SCHEMA'
 WHERE 1=1
 --AND major_id = SCHEMA_ID('prodcopystg')
-AND USER_NAME(grantee_principal_id) LIKE '%CI_ClientAccess%' 
+AND USER_NAME(grantee_principal_id) LIKE 'CI_ClientAccess%' 
 ;
-
-
