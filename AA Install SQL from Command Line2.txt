@@ -1,0 +1,2 @@
+--Download and extract the update and use the following command to slipstream latest service pack or cu to installation
+D:\setup.exe /Action=Install /UpdateEnabled=TRUE /UpdateResource="C:\temp\sql2017cu4"

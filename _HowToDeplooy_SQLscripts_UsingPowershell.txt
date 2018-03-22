@@ -1,0 +1,14 @@
+powershell command line
+
+$dblist = Invoke-Sqlcmd -ServerInstance ssbcidw04 -Database master -InputFile "I:\Backups\dblist.sql" -QueryTimeout 600
+
+	above command executes the script in the input file and stores the list of database names in the dblist parameter
+
+foreach ($db in $dblist) { $db.DatabaseName }
+
+	above command prints each database name to the screen
+	
+foreach ($db in $dblist) { Invoke-Sqlcmd -ServerInstance ssbcidw04 -Database $db.DatabaseName -InputFile "I:\Backups\cust_CustomerLookupSearch.sql" -QueryTimeout 300 }
+
+	above command executes script in the inputfile for each database
+

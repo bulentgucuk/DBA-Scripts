@@ -1,4 +1,3 @@
--- Find the available space in each file and file group data for all the databases
 SET NOCOUNT ON;
 IF OBJECT_ID('tempdb..#DbSize') IS NOT NULL
 	DROP TABLE #DbSize
@@ -37,3 +36,13 @@ ORDER BY dbf.type_desc DESC, dbf.file_id;'
 
 SELECT	*
 FROM	#DbSize
+
+SELECT	DatabaseName, sum(totalspace/1024) as DatabaseFileSizeInGB, sum(spaceused/1024) as SpaceUsedInGB, sum(freespaceinMB/1024) as FreeSpaceInGB
+FROM	#DbSize
+where	DatabaseId > 4
+and		DatabaseName <> 'dba'
+and		FileId <> 2
+group by DatabaseName
+order by DatabaseName
+
+-- DROP TABLE #DbSize

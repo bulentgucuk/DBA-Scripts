@@ -39,7 +39,7 @@ MD1.Col5, MD1.Col6, MD1.Col7, MD1.Col8,
 MD1.Col9, MD1.Col10, MD1.Col11, MD1.Col12,
 MD1.Col13, MD1.Col14, MD1.Col15, MD1.Col16
 FROM MyDuplicate MD1
-INNER JOIN MyDuplicate MD2 ON MD1.tablename = MD2.tablename
+INNER JOIN MyDuplicate MD2 ON MD1.tablename = MD2.tablename AND MD1.SchemaName = MD2.SchemaName
 AND MD1.indexname <> MD2.indexname
 AND MD1.Col1 = MD2.Col1
 AND (MD1.Col2 IS NULL OR MD2.Col2 IS NULL OR MD1.Col2 = MD2.Col2)
