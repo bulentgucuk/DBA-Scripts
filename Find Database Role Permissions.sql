@@ -61,6 +61,7 @@ SELECT    @roleDesc = @roleDesc +
 FROM    sys.database_permissions dp
 WHERE    USER_NAME(dp.grantee_principal_id) IN (@roleName)
 GROUP BY dp.state, dp.major_id, dp.permission_name, dp.class
+ORDER BY SCHEMA_NAME(dp.major_id), dp.State;
 
 SELECT @roleDesc = @roleDesc + 'GO' + @crlf + @crlf
 
