@@ -41,7 +41,7 @@ BEGIN
         SUSER_NAME(), 
         HOST_NAME(), 
         PROGRAM_NAME(),
-        ISNULL(@EventDataXml.value('(/EVENT_INSTANCE/DatabaseName)[1]', 'SYSNAME'), 'master'),
+        ISNULL(@EventDataXml.value('(/EVENT_INSTANCE/DatabaseName)[1]', 'SYSNAME'), DB_NAME()),
         @EventType, 
         @SchemaName, 
         @ObjectName, 

@@ -26,7 +26,7 @@ BEGIN
 		, @SchemaName = @EventDataXml.value('(/EVENT_INSTANCE/SchemaName)[1]', 'SYSNAME')
 		, @ObjectName = @EventDataXml.value('(/EVENT_INSTANCE/ObjectName)[1]', 'SYSNAME');
     
-    INSERT [DBA].dbo.[AuditLog] (
+    INSERT INTO [DBA].dbo.[AuditLog] (
         [CreateDate],[LoginName], [ComputerName],[ProgramName],[DBName],[SQLEvent], [SchemaName], [ObjectName], [SQLCmd], [XmlEvent]
     )
     SELECT

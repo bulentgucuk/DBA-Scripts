@@ -12,3 +12,9 @@ foreach ($db in $dblist) { Invoke-Sqlcmd -ServerInstance ssbcidw04 -Database $db
 
 	above command executes script in the inputfile for each database
 
+
+	
+-- SSBDWDEV01 below line how I deployed the database DDL trigger saved the trigger scrip to C:\Temp\Database_DDL_Trigger.sql
+cls
+$dblist = Invoke-Sqlcmd -ServerInstance ssbdwdev01 -Database master -query "select name from sys.databases where database_id > 4 and is_read_only = 0 order by name" -QueryTimeout 600
+foreach ($db in $dblist) { Invoke-Sqlcmd -ServerInstance ssbdwdev01 -Database $db.Name -InputFile "C:\Temp\Database_DDL_Trigger.sql" -QueryTimeout 300 }
