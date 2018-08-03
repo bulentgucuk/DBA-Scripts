@@ -16,5 +16,64 @@ foreach ($db in $dblist) { Invoke-Sqlcmd -ServerInstance ssbcidw04 -Database $db
 	
 -- SSBDWDEV01 below line how I deployed the database DDL trigger saved the trigger scrip to C:\Temp\Database_DDL_Trigger.sql
 cls
-$dblist = Invoke-Sqlcmd -ServerInstance ssbdwdev01 -Database master -query "select name from sys.databases where database_id > 4 and is_read_only = 0 order by name" -QueryTimeout 600
-foreach ($db in $dblist) { Invoke-Sqlcmd -ServerInstance ssbdwdev01 -Database $db.Name -InputFile "C:\Temp\Database_DDL_Trigger.sql" -QueryTimeout 300 }
+$sqlservername = 'ssbcidw05'
+$dblist = Invoke-Sqlcmd -ServerInstance $sqlservername -Database master -query "select name from sys.databases where  database_id <> 5 and database_id > 4 and is_read_only = 0 order by name" -QueryTimeout 600
+foreach ($db in $dblist) { Invoke-Sqlcmd -ServerInstance $sqlservername -Database $db.Name -InputFile "C:\Temp\Database_DDL_Trigger.sql" -QueryTimeout 300 }
+
+
+-- This is how Database_DDL_Audit database trigger deployed to VM-DB-PROD-01 and VM-DB-PROD-02
+cls
+$sqlservername = 'VM-DB-PROD-01'
+$dblist = Invoke-Sqlcmd -ServerInstance $sqlservername -Database master -InputFile "C:\Temp\dblist.sql" -QueryTimeout 600
+foreach ($db in $dblist) { $db.name }
+foreach ($db in $dblist) { Invoke-Sqlcmd -ServerInstance $sqlservername -Database $db.name -InputFile "C:\Temp\db_SSB_IE_Permitted_Role.sql" -QueryTimeout 300 }
+
+-- This is how permissions granted to db_SSB_IE_Permitted_Role on VM-DB-PROD-01 and VM-DB-PROD-02
+cls
+$sqlservername = 'VM-DB-PROD-02'
+$dblist = Invoke-Sqlcmd -ServerInstance $sqlservername -Database master -InputFile "C:\DatabaseDeployment\dblist.sql" -QueryTimeout 600
+foreach ($db in $dblist) { $db.name }
+foreach ($db in $dblist) { Invoke-Sqlcmd -ServerInstance $sqlservername -Database $db.name -InputFile "C:\DatabaseDeployment\Database_DDL_Audit.sql" -QueryTimeout 300 }
+
+$This is how I used text file to read the line for the database connection and connect to each to execute the script
+cls
+$sqlservername = 'VM-DB-PROD-02'
+foreach($line in [System.IO.File]::ReadLines("C:\Temp\DBList.txt"))
+{
+       $line
+       Invoke-Sqlcmd -ServerInstance $sqlservername -Database $line -QueryTimeout 300 -InputFile "C:\Temp\svcSegmentation_Permissions.sql"
+}
+
+$ This is how I deployed handfull of scripts saved under folder
+CLS
+$sqlservername = 'VM-DB-PROD-01'
+$db = 'Aggies'
+$folderPath = 'C:\temp\Aggies\'
+$ScriptList = Get-ChildItem -Path $folderPath -exclude etl*
+foreach ($script in $ScriptList)
+    {
+    #$db
+    #$script.name
+    $scriptFullPath = $folderPath + $script.Name
+    $scriptFullPath
+    #Invoke-Sqlcmd -ServerInstance $sqlservername -Database $db -InputFile $scriptFullPath -QueryTimeout 300 
+   
+    }
+
+
+# This is how I deployed MDM Pre-release scripts saved under folder on vm-db-dev-01
+CLS
+$sqlservername = 'VM-NASCAR-DW-P2'
+$db = 'MDM'
+$folderPath = 'C:\Temp\MDM_2_6\'
+$ScriptList = Get-ChildItem -Path $folderPath -exclude etl*
+foreach ($script in $ScriptList)
+    {
+    #$db
+    #$script.name
+    $scriptFullPath = $folderPath + $script.Name
+    $scriptFullPath
+    Invoke-Sqlcmd -ServerInstance $sqlservername -Database $db -InputFile $scriptFullPath -QueryTimeout 300 
+   
+    }
+

@@ -65,7 +65,10 @@ BEGIN
 	INSERT INTO #TransLogMonitor(DatabaseName, LogSizeMB, LogSpaceUsed, [Status])
 	EXEC ('DBCC SQLPERF(logspace)')
 
-	IF @@VERSION LIKE 'Microsoft SQL Server 2016%' OR @@VERSION LIKE 'Microsoft SQL Server 2014%' OR @@VERSION LIKE 'Microsoft SQL Server 2012%'
+	IF	@@VERSION LIKE 'Microsoft SQL Server 2017%'
+	OR	@@VERSION LIKE 'Microsoft SQL Server 2016%' 
+	OR	@@VERSION LIKE 'Microsoft SQL Server 2014%'
+	OR	@@VERSION LIKE 'Microsoft SQL Server 2012%'
 	BEGIN
 		EXEC sp_MSforeachdb N'USE [?];
 			  INSERT INTO #LogInfo2012
