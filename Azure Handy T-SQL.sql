@@ -1,7 +1,7 @@
 --Creating a database
 
 CREATE DATABASE [MeeTwoDB]
-( MAXSIZE = 5GB, EDITION = 'standard', SERVICE_OBJECTIVE = 'S2' ) ;
+(MAXSIZE = 5GB, EDITION = 'standard', SERVICE_OBJECTIVE = 'S2') ;
 
 
 --Checking details
