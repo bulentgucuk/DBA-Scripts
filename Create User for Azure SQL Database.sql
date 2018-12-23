@@ -12,7 +12,7 @@ IF USER_ID(@UserName) IS NULL
 	END
 
 
-SELECT	@str = 'ALTER ROLE ' + QUOTENAME(@RoleName) + ' ADD MEMBER' + QUOTENAME(@UserName) + ';';
+SELECT	@str = 'ALTER ROLE ' + QUOTENAME(@RoleName) + ' ADD MEMBER ' + QUOTENAME(@UserName) + ';';
 PRINT @str;
 EXEC sp_executesql @stmt = @str;
 
