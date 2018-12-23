@@ -31,6 +31,24 @@ GO
 
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DF_AuditLog_CreateDate]') AND type = 'D')
 BEGIN
-ALTER TABLE [dbo].[AuditLog] ADD  CONSTRAINT [DF_AuditLog_CreateDate]  DEFAULT (getdate()) FOR [CreateDate]
+	ALTER TABLE [dbo].[AuditLog] ADD  CONSTRAINT [DF_AuditLog_CreateDate]  DEFAULT (getdate()) FOR [CreateDate]
 END
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[AuditLog]') AND name = N'NCIX_AuditLog_CreateDate')
+BEGIN
+	CREATE NONCLUSTERED INDEX NCIX_AuditLog_CreateDate
+		ON [dbo].[AuditLog]
+		([CreateDate])
+	WITH (DATA_COMPRESSION = PAGE)
+END
+
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'db_Database_DDL_Audit' AND type = 'R')
+	CREATE ROLE [db_Database_DDL_Audit];
+GO
+
+GRANT INSERT ON OBJECT::[dbo].[AuditLog] TO [db_Database_DDL_Audit];
+
 GO

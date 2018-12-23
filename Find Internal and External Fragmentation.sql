@@ -1,20 +1,27 @@
--- Find Both Internal and External Fragmentation
 SELECT
-	  QUOTENAME(OBJECT_SCHEMA_NAME(ix.object_id)) + '.' + QUOTENAME(o.name) AS 'TableName'
-	, ix.index_id
-	, IX.name AS 'IndexName'
-	, PS.index_level AS 'IndexLevel'
-	, PS.page_count AS 'PageCount'
-	, PS.avg_page_space_used_in_percent AS 'Page Fullness (%)'
-	, PS.avg_fragmentation_in_percent AS 'External Fragmentation (%)'
-	, PS.fragment_count AS 'Fragments'
-	, PS.avg_fragment_size_in_pages AS 'Avg Fragment Size'
-FROM sys.dm_db_index_physical_stats( DB_ID()
-									, null -- REPLACE NULL WITH OBJECT_ID
-									, DEFAULT
-									, DEFAULT
-									, 'DETAILED') AS PS
-	INNER JOIN sys.indexes IX ON IX.OBJECT_ID = PS.OBJECT_ID AND IX.index_id = PS.index_id
-	INNER JOIN sys.objects as o on o.object_id = ix.object_id
-ORDER BY TableName, IX.INDEX_ID
-GO
+	  DB_NAME() AS 'DatabaseName'
+	, s.name AS 'SchemaName'
+	, t.Name AS 'TableName'
+	, t.create_date AS 'CreateDate'
+	, CASE
+		WHEN I.index_id = 0 THEN 'HEAP'
+		ELSE i.Name
+		END AS 'IndexName'
+	, i.index_id AS 'IndexId'
+	, MAX(ps.row_count) AS 'RowCount'
+	, SUM(ps.reserved_page_count) * 8.0 / (1024) as 'SpaceInMB'
+	, (SUM(ps.reserved_page_count) * 8.0 / (1024))/ 1024 as 'SpaceInGB'
+	, CASE
+		WHEN MAX(ps.row_count) = 0 THEN 0
+		ELSE (8 * 1024* SUM(ps.reserved_page_count)) / NULLIF(MAX(ps.row_count), 0)
+		END AS 'Bytes/Row'
+	, p.Data_compression_desc
+FROM	sys.dm_db_partition_stats AS ps
+	INNER JOIN sys.indexes AS i ON ps.object_id = i.object_id and ps.index_id = i.index_id
+	INNER JOIN sys.tables AS t ON i.object_id = t.object_id
+	INNER JOIN sys.schemas AS s ON t.schema_id = s.schema_id
+	INNER JOIN sys.partitions as p ON p.index_id = i.index_id and p.object_id = t.object_id
+WHERE	t.is_ms_shipped = 0
+GROUP BY s.name, t.Name, i.Name, i.index_id, t.create_date, p.Data_compression_desc
+ORDER BY SpaceInMB DESC
+OPTION(RECOMPILE);
