@@ -1,0 +1,1 @@
+FORFILES /p D:\DBObjects\Databases /S /D -14 /C "cmd /c IF @isdir == TRUE rd /S /Q @path"

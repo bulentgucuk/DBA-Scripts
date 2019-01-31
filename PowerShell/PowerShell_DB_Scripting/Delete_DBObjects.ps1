@@ -1,0 +1,1 @@
+Get-ChildItem –Path  “D:\DBObjects\Databases” –Recurse | Where-Object CreationTime –lt (Get-Date).AddDays(-90) | Remove-Item

@@ -1,29 +1,4 @@
 
-Statistics for sadbprod01backups/backupcontainer:
-6,664 blobs; 34,179,914,792,960 bytes 
-5,820 blobs; 33,313,925,038,080 bytes
-
-
-Statistics for sadbprod02backups/backupcontainer:
-11,031 blobs; 71,779,066,249,216 bytes
-4,738 blobs;  54,245,280,382,976 bytes
-
-
-Statistics for saetlprod01backups/backupcontainer: 
-2,722 blobs; 7,513,702,400 bytes
-910 blobs;   6,647,316,480 bytes
-
-
-Statistics for saebgdwp2backups/backupcontainer: 
-699 blobs; 18,945,305,673,728 bytes
-459 blobs; 15,312,972,808,192 bytes
-
-
-Statistics for sanascardwp2backups/backupcontainer: 
-2,388 blobs; 12,895,666,372,608 bytes 
-1,180 blobs; 9,397,317,337,088 bytes
-
-
 usatriathlon-db-01
 sausatriathlondb01audit
 
