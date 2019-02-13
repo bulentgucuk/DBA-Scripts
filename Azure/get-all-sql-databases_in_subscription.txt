@@ -1,0 +1,19 @@
+
+usatriathlon-db-01
+sausatriathlondb01audit
+
+
+get-azurermsubscription
+
+Select-AzureRmSubscription -Subscription d9da86e1-7cc1-406a-8492-501fffbc33fe
+
+Get-AzureRMSQLserver
+Get-AzureRMSQLserver | select ResourceGroupName, ServerName, FullyQualifiedDomainName, Location
+Get-AzureRMSQLserver | select ResourceGroupName, ServerName, Location
+
+Get-AzureRMSQLDatabase -ResourceGroupName rg-universityofmissouri -ServerName universityofmissouri-db-01 
+
+Get-AzureRMSQLDatabase -ResourceGroupName rg-universityofmissouri -ServerName universityofmissouri-db-01 | Where-Object{$_.DatabaseName -ne 'master'}
+Get-AzureRMSQLDatabase -ResourceGroupName rg-universityofmissouri -ServerName universityofmissouri-db-01 | Where-Object{$_.DatabaseName -ne 'master'} | Select DatabaseName
+
+
