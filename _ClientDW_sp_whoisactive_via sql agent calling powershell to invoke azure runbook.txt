@@ -1,0 +1,22 @@
+--GoogleDrive\SQL Server\DBA-Scripts\PowerShell\Azure SQL DB  sp_whoisactive implementation
+
+First create the following objects in the ClientDW (Azure SQL Database)
+	1. dbo.WhoIsActive (table to store results of the stored procedure dbo.sp_whoisactive)
+	2. ro.WhoisActive (view for clients to access the data in dbo schema using the view in ro schema)
+	3. dbo.sp_whoisactive (open source stored procedure)
+	4. dbo.sp_whoisactive_populate (wrapper stored proc that calls the dbo.sp_whoisactive and populates dbo.WhoIsActive)
+	5. dbo.sp_whoisactive_prune (stored procedure to delete any records older than 7 days from the table dbo.WhoIsActive)
+	
+
+
+1. Create a powershell runbook to execute the sp_whoisactive_populate and sp_whoisactive_prune store procs
+	See the runbook named 'DBA_srv-bostonbruins-01_db-bostonbruins-prod_whoisactive'
+2. Create a webhook for the runbook, no need to create a schedule since azure schedule does not have minute level scheduling
+	webhook method is 'https' and action is 'post'
+3. Create a sql agent job and schdule it to run every minute or whatever the required schedule is
+	Reference job is named 'BostonBruins.ClientDW.WhoIsActive' on vm-etl-prod-01'
+	Make sure to update the name of the powershell file and parameters to invoke the webhook.
+4. In C:\Powershell folder make a copy of the powershell script named 'Bruins_ClientDW_WhoIsActive.ps1' for the client and point the job step 2 for the above job to that powershell script to be executed
+
+
+PS.  We might need only one powershell script to be called for each job passing in the correct parametes for the webhook and method.

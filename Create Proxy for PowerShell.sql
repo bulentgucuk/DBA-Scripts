@@ -71,6 +71,7 @@ EXEC msdb.dbo.sp_grant_login_to_proxy
 --,@login_name=N'SSBINFO\SSB CRM Sec'
 --,@login_name=N'SSBINFO\SSB MDM Sec'
 ,@login_name=N'SSBINFO\SSB ETL Sec'
+--,@login_name=N'SSBINFO\SSB QA Sec'
 --,@fixed_server_role=N''
 --,@msdb_role=N''
 GO

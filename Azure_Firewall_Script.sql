@@ -1,24 +1,18 @@
 -- this is for the Azure SQL Server (logical server)
 -- execute in the master database
-SELECT * FROM sys.firewall_rules
-WHERE NAME LIKE '%bgucuk%'
-ORDER BY start_ip_address, name;
+SELECT	*
+FROM	sys.firewall_rules
+WHERE	NAME LIKE '%gucuk%'
+ORDER BY name;
 
-/****
-EXECUTE sp_set_firewall_rule
-	  @name = N'bgucuk_ssbinfo.com:Home:2018-02-01 00:00:00'
-	, @start_ip_address = '71.33.200.167'
-	, @end_ip_address = '71.33.200.167'
-
-****/
 
 /***
-EXECUTE sp_set_firewall_rule
-	  @name = N'bgucuk_ssbinfo.com:Home:2019-01-17'
-	, @start_ip_address = '71.33.172.178'
-	, @end_ip_address = '71.33.172.178';
+exec sp_set_firewall_rule 
+	@name = N'bgucuk_ssbinfo.com_home_office',
+	@start_ip_address = '71.211.249.39',
+	@end_ip_address = '71.211.249.39'
+	
+exec sp_delete_firewall_rule
+	@name = N'SSB_bgucuk@ssbinfo.com_HomeOffice_2018-3-27_10-26-34';
+	
 ***/
-GO
-SELECT	*
-FROM	sys.firewall_rules;
-GO
