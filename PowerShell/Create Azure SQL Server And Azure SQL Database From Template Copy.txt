@@ -1,0 +1,76 @@
+#Import-Module Az
+#Login-AzAccount
+#Get-AzSubscription
+#Select-AzSubscription -Subscription e7516aa0-af29-4378-a495-aff8aac8ced2 #SSB Client Data Warehouses
+
+# The SubscriptionId in which to create these objects
+$SubscriptionId = 'e7516aa0-af29-4378-a495-aff8aac8ced2'
+
+# Set the resource group name and location for your server
+$resourceGroupName = "rg-ssbclientdatawarehouse"
+$location = "westus2"
+
+# Set an admin login and password for your server
+$adminSqlLogin = "ssbadmin"
+$password = "L(fs[c7s5A=@Kk>"
+
+# Set server name - the logical server name has to be unique in the system
+$serverName = "ssb-wharton-db-01"
+
+# The sample database name and service objective (azure tier)
+$databaseName = "ssb-wharton"
+$serviceObjectiveName = "S2"
+
+# Source Database Server and Source template database
+$sourceServerName = "ssb-ssb-server"
+$sourceDatabaseName = "ssb-dw-template"
+
+# The ip address range that you want to allow to access your server
+# All Azure IP Addresses
+$FirewallRuleNameAZips = "AllowAllWindowsAzureIps"
+$startIPAZ = "0.0.0.0"
+$endIPAZ = "0.0.0.0"
+# SSB Denver Office
+$FirewallRuleNameSSBDenverOffice = "SSB Denver Office"
+$startIpSSBDenver = "63.239.148.82"
+$endIpSSBDenver = "63.239.148.82"
+# SSB Nashville Office
+$FirewallRuleNameSSBNashvilleOffice = "SSB Nashville Office"
+$startIpSSBNashvilleOffice = "96.85.145.105"
+$endIpSSBNashvilleOffice = "96.85.145.105"
+# SSB Nashville Vonage
+$FirewallRuleNameSSBNashvilleVonage = "SSB Nashville Vonage"
+$startIpSSBNashvilleVonage = "209.119.226.58"
+$endIpSSBNashvilleVonage = "209.119.226.58"
+
+# Set context to subscription 
+Set-AzContext -SubscriptionId $subscriptionId
+
+
+# Create a resource group uncomment below if resource group does not exist
+# $resourceGroup = New-AzResourceGroup -Name $resourceGroupName -Location $location
+
+# Create a server with a system wide unique server name
+$server = New-AzSqlServer -ResourceGroupName $resourceGroupName `
+    -ServerName $serverName `
+    -Location $location `
+    -SqlAdministratorCredentials $(New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $adminSqlLogin, $(ConvertTo-SecureString -String $password -AsPlainText -Force))
+
+#Set Azure SQL Server Active Direcotry Admin to DBAdmins domain group
+Set-AzSqlServerActiveDirectoryAdministrator -ResourceGroupName $resourceGroupName -ServerName $serverName -DisplayName "DBAdmins"
+
+# Create a server firewall rule that allows access from the specified IP range
+$serverFirewallRule = New-AzSqlServerFirewallRule -ResourceGroupName $resourceGroupName -ServerName $serverName -FirewallRuleName $FirewallRuleNameAZips -StartIpAddress $startIPAZ -EndIpAddress $endIPAZ
+$serverFirewallRule
+
+$serverFirewallRule = New-AzSqlServerFirewallRule -ResourceGroupName $resourceGroupName -ServerName $serverName -FirewallRuleName $FirewallRuleNameSSBDenverOffice -StartIpAddress $startIpSSBDenver -EndIpAddress $endIpSSBDenver
+$serverFirewallRule
+
+$serverFirewallRule = New-AzSqlServerFirewallRule -ResourceGroupName $resourceGroupName -ServerName $serverName -FirewallRuleName $FirewallRuleNameSSBNashvilleOffice -StartIpAddress $startIpSSBNashvilleOffice -EndIpAddress $endIpSSBNashvilleOffice
+$serverFirewallRule
+
+$serverFirewallRule = New-AzSqlServerFirewallRule -ResourceGroupName $resourceGroupName -ServerName $serverName -FirewallRuleName $FirewallRuleNameSSBNashvilleVonage -StartIpAddress $startIpSSBNashvilleVonage -EndIpAddress $endIpSSBNashvilleVonage
+$serverFirewallRule
+
+New-AzSqlDatabaseCopy -ResourceGroupName $resourceGroupName -ServerName $sourceServerName -DatabaseName $sourceDatabaseName -CopyResourceGroupName $resourceGroupName -CopyServerName $serverName -CopyDatabaseName $databaseName -ServiceObjectiveName $serviceObjectiveName
+

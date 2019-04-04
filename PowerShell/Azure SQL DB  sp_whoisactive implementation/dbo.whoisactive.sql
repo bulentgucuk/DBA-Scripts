@@ -1,4 +1,3 @@
-/****** Object:  Table [dbo].[WhoIsActive]    Script Date: 2/27/2019 9:54:52 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -59,5 +58,3 @@ CREATE NONCLUSTERED INDEX [NCIX_dbo_WhoIsActive_collection_time] ON [dbo].[WhoIs
 	[collection_time] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 100, DATA_COMPRESSION = PAGE) 
 GO
-
-

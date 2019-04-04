@@ -2,12 +2,14 @@
 
 First create the following objects in the ClientDW (Azure SQL Database)
 	1. dbo.WhoIsActive (table to store results of the stored procedure dbo.sp_whoisactive)
-	2. ro.WhoisActive (view for clients to access the data in dbo schema using the view in ro schema)
+	2. ro.vw_WhoisActive (view for clients to access the data in dbo schema using the view in ro schema)
 	3. dbo.sp_whoisactive (open source stored procedure)
 	4. dbo.sp_whoisactive_populate (wrapper stored proc that calls the dbo.sp_whoisactive and populates dbo.WhoIsActive)
 	5. dbo.sp_whoisactive_prune (stored procedure to delete any records older than 7 days from the table dbo.WhoIsActive)
 	
-
+DBA_ClientDW_WhoIsActive
+webhook
+https://s13events.azure-automation.net/webhooks?token=AV5BGX1rxYbVqz3tGSVx63kwUt5iTfLEXoGrlHjs2PY%3d
 
 1. Create a powershell runbook to execute the sp_whoisactive_populate and sp_whoisactive_prune store procs
 	See the runbook named 'DBA_srv-bostonbruins-01_db-bostonbruins-prod_whoisactive'
@@ -20,3 +22,13 @@ First create the following objects in the ClientDW (Azure SQL Database)
 
 
 PS.  We might need only one powershell script to be called for each job passing in the correct parametes for the webhook and method.
+
+
+
+
+
+$e = @{
+Uri     = "https://api.catsone.com/v3/candidates/99973949"
+Headers = @{"Method" = "GET"; "Authorization" = "Token 297fecXXXXXXXXXXXXXXd31eff5"; "Accept" = "application/json" }
+}
+$response = Invoke-RestMethod @e

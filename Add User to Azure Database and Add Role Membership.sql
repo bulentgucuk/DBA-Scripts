@@ -37,7 +37,7 @@ IF OBJECT_ID ('tempdb..#DbRoles') IS NOT NULL
 SELECT
 	  IDENTITY(TINYINT) AS RowId
 	, LTRIM(RTRIM(value)) AS 'RoleName'
-	, 'ALTER ROLE ' + LTRIM(RTRIM(value)) + ' ADD MEMBER ' + QUOTENAME(@UserName) + ';' AS 'Str'
+	, 'ALTER ROLE ' + QUOTENAME((LTRIM(RTRIM(value)))) + ' ADD MEMBER ' + QUOTENAME(@UserName) + ';' AS 'Str'
 INTO	#DbRoles
 FROM	string_split(@Roles, ',')
 WHERE	not exists (

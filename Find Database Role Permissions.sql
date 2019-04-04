@@ -61,18 +61,17 @@ SELECT    @roleDesc = @roleDesc +
 FROM    sys.database_permissions dp
 WHERE    USER_NAME(dp.grantee_principal_id) IN (@roleName)
 GROUP BY dp.state, dp.major_id, dp.permission_name, dp.class
-ORDER BY SCHEMA_NAME(dp.major_id), dp.State;
 
 SELECT @roleDesc = @roleDesc + 'GO' + @crlf + @crlf
 
 -- Display users within Role.  Code stubbed by Joe Spivey
-SELECT	@roleDesc = @roleDesc + 'EXECUTE sp_AddRoleMember ''' + roles.name + ''', ''' + users.name + '''' + @crlf
-FROM	sys.database_principals users
-		INNER JOIN sys.database_role_members link 
-			ON link.member_principal_id = users.principal_id
-		INNER JOIN sys.database_principals roles 
-			ON roles.principal_id = link.role_principal_id
-WHERE	roles.name = @roleName
+SELECT  @roleDesc = @roleDesc + 'EXECUTE sp_AddRoleMember ''' + roles.name + ''', ''' + users.name + '''' + @crlf
+FROM    sys.database_principals users
+        INNER JOIN sys.database_role_members link 
+            ON link.member_principal_id = users.principal_id
+        INNER JOIN sys.database_principals roles 
+            ON roles.principal_id = link.role_principal_id
+WHERE   roles.name = @roleName
 
 -- PRINT out in blocks of up to 8000 based on last \r\n
 DECLARE @printCur INT
