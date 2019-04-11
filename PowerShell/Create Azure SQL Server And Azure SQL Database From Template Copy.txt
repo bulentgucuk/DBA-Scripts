@@ -1,5 +1,5 @@
 #Import-Module Az
-#Login-AzAccount
+#Connect-AzAccount
 #Get-AzSubscription
 #Select-AzSubscription -Subscription e7516aa0-af29-4378-a495-aff8aac8ced2 #SSB Client Data Warehouses
 

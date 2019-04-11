@@ -6,7 +6,8 @@ SET @roleName = 'db_SSBDeveloper'
 -- Script out the Role
 DECLARE @roleDesc VARCHAR(MAX), @crlf VARCHAR(2)
 SET @crlf = CHAR(13) + CHAR(10)
-SET @roleDesc = 'CREATE ROLE [' + @roleName + ']' + @crlf + 'GO' + @crlf + @crlf
+--SET @roleDesc = 'CREATE ROLE [' + @roleName + '];' + @crlf + 'GO' + @crlf + @crlf
+SET @roleDesc = 'IF DATABASE_PRINCIPAL_ID('+'''' + @roleName + ''''+') IS NULL' + @crlf + 'CREATE ROLE ' + QUOTENAME(@roleName) + ' AUTHORIZATION dbo;' + @crlf + 'GO' + @crlf + @crlf
 
 SELECT    @roleDesc = @roleDesc +
         CASE dp.state
@@ -56,8 +57,8 @@ SELECT    @roleDesc = @roleDesc +
             WHEN 25 THEN 'ON CERTIFICATE::[' + (SELECT name FROM sys.certificates WHERE certificate_id = dp.major_id) + '] '
             WHEN 26 THEN 'ON ASYMMETRIC KEY::[' + (SELECT name FROM sys.asymmetric_keys WHERE asymmetric_key_id = dp.major_id) + '] '
          END COLLATE SQL_Latin1_General_CP1_CI_AS
-         + 'TO [' + @roleName + ']' + 
-         CASE dp.state WHEN 'W' THEN ' WITH GRANT OPTION' ELSE '' END + @crlf
+         + 'TO [' + @roleName + '];' + 
+         CASE dp.state WHEN 'W' THEN ' WITH GRANT OPTION;' ELSE '' END + @crlf
 FROM    sys.database_permissions dp
 WHERE    USER_NAME(dp.grantee_principal_id) IN (@roleName)
 GROUP BY dp.state, dp.major_id, dp.permission_name, dp.class
@@ -65,7 +66,8 @@ GROUP BY dp.state, dp.major_id, dp.permission_name, dp.class
 SELECT @roleDesc = @roleDesc + 'GO' + @crlf + @crlf
 
 -- Display users within Role.  Code stubbed by Joe Spivey
-SELECT  @roleDesc = @roleDesc + 'EXECUTE sp_AddRoleMember ''' + roles.name + ''', ''' + users.name + '''' + @crlf
+--SELECT  @roleDesc = @roleDesc + 'EXECUTE sp_AddRoleMember ''' + roles.name + ''', ''' + users.name + '''' + @crlf
+SELECT  @roleDesc = @roleDesc + 'ALTER ROLE ' + QUOTENAME(roles.name) + ' ADD MEMBER ' + QUOTENAME(users.name) + ';' + @crlf
 FROM    sys.database_principals users
         INNER JOIN sys.database_role_members link 
             ON link.member_principal_id = users.principal_id

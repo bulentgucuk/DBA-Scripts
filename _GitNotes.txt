@@ -26,6 +26,9 @@ git checkout branchame -- switch to the branch
 
 git show-ref master  -- shows reference sha1 to all branches with name master in it
 
+-- shows you the URLs that Git has stored for the shortname to be used when reading and writing to that remote
+git remote -v
+
 -- sycn fork to upstream before you might want to change to proper repository
 git fetch upstream
 git merge upstream/develop
