@@ -5,6 +5,7 @@ git status
 git pull
 
 git branch -- list the branches local
+git branch -v list the branches with additional information
 git branch -r list the remote branches
 git branch --merged lists the local branches merged to master
 git branch -r --merged lists the remote branches merged to master
@@ -39,11 +40,8 @@ git commit -m "My commit message" -- commites changes to the repository with the
 
 git log -1  -- returns the latest commit log record
 
-git push  -- pushes the updates to the remote repository
-
 
 to minimize the conflich "fetch" and "merge" (which pull does that) on local, and then "push"
-
 
 git pull
 
