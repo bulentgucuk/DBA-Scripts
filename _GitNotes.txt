@@ -1,6 +1,105 @@
 https://github.com/dahlbyk/posh-git
 POWERSHELL command -- import-module posh-git
 
+
+Common code is missing the initial deployment scripts for the client core db on dev and prod db servers
+
+
+Start working on reporting db and integration db 
+
+------------------------------------------------SSB------------------------------------------------
+
+-- Add new branch
+git branch BranchTest1
+
+-- List local branches
+git branch -v
+
+
+-- Checkout new local branch -q suppresses the stderr from git
+git checkout BranchTest1 -q
+
+-- List remote branches
+git branch -r
+
+-- push new branch to remote repo origin
+git push -u origin BranchTest1
+
+--show the new branch and develop brach base that they match
+git branch -v
+git branch -v -r
+
+--Make changes in the local repo
+
+--Show status
+git status
+
+--[BranchTest1 ≡ +0 ~0 -1 !]  first number new files second number updated files third number removed files)  in red color
+
+--Add the changes (-A adds all the changes)
+git add -A
+
+--[BranchTest1 ≡ +0 ~0 -1 ~] the exclamation mark changes to ~
+
+--commit changes to local repo
+git commit -m "BranchTest1 changes"
+
+--[BranchTest1 ↑1]  1 change to push to origin
+
+--Show the changes waiting to be pushed
+git status
+
+--push changes
+git push -q
+
+--show local and remote base
+ git branch -v
+ git branch -r -v
+ 
+--switch to branch that we want to merge the changes from the branch we have been working
+--switch to develop
+git checkout develop -q
+
+--fetch before merge to develop
+git fetch
+
+--merge BranchTest1 to develop and read the message and the base
+
+git merge BranchTest1
+
+--push the change to origin
+git push
+
+
+--show the branches and base that they match
+git branch -v
+git branch -v -r
+
+-- checkout to master and merge from develop at this point repeat the same merge, push
+
+
+--remove the branch
+--checkout to branch and unset the remote tracking
+git branch --unset-upstream
+
+--Pay attention to command line changes from [BranchTest1 ≡]>  to [BranchTest1]> 
+
+--delete local branch
+git brach -d BranchTest1
+
+--delete remote branch
+git push origin --delete BranchTest1
+
+
+-- Fetch and show local and remote branches with base numbers
+git fetch
+git branch -v
+git branch -v -r
+
+
+------------------------------------------------SSB------------------------------------------------
+
+
 git status
 git pull
 
@@ -56,4 +155,7 @@ git push  -- pushes the updates to the remote repository
 git status
 
 git log -2
+
+
+
 
