@@ -1,8 +1,3 @@
-
-usatriathlon-db-01
-sausatriathlondb01audit
-
-
 get-azurermsubscription
 
 Select-AzureRmSubscription -Subscription d9da86e1-7cc1-406a-8492-501fffbc33fe
