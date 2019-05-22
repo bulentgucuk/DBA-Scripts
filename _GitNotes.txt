@@ -85,14 +85,14 @@ git branch --unset-upstream
 --Pay attention to command line changes from [BranchTest1 ≡]>  to [BranchTest1]> 
 
 --delete local branch
-git brach -d BranchTest1
+git branch -d BranchTest1
 
 --delete remote branch
 git push origin --delete BranchTest1
 
 
 -- Fetch and show local and remote branches with base numbers
-git fetch
+git fetch --all
 git branch -v
 git branch -v -r
 
