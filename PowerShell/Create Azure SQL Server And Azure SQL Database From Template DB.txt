@@ -13,7 +13,7 @@ $location = "westus"
 
 # Set an admin login and password for your server
 $adminSqlLogin = "ssbadmin"
-$password = "L(fs[c7s5A=@Kk>"
+$password = "LASTPASS"
 
 # Set server name - the logical server name has to be unique in the system and lowercase
 # SERVERNAME MUST BE ALL LOWERCASE

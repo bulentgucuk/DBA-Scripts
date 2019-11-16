@@ -1,12 +1,12 @@
 -- Find Detailed Information on Missing Indexes
 DECLARE
-	@SchemeName  SysName,
+	@SchemaName  SysName,
 	@TableName SysName,
 	@Sort tinyint,
 	@Delimiter VarChar(1)
 
 SELECT
-	@SchemeName ='',
+	@SchemaName ='',
 	@TableName = '',-- CHANGE THE TABLE NAME OR PASS EMPTY STRING FOR ALL
 	@Sort =1,
 	@Delimiter =','
@@ -52,7 +52,7 @@ FROM
 	JOIN sys.dm_db_missing_index_group_stats ON sys.dm_db_missing_index_groups.index_group_handle=sys.dm_db_missing_index_group_stats.group_handle
 WHERE
 	sys.dm_db_missing_index_details.database_id=DB_ID()
-	AND sys.schemas.name LIKE CASE WHEN @SchemeName='' THEN sys.schemas.name ELSE @SchemeName END
+	AND sys.schemas.name LIKE CASE WHEN @SchemaName='' THEN sys.schemas.name ELSE @SchemaName END
 	AND sys.objects.name LIKE CASE WHEN @TableName='' THEN sys.objects.name ELSE @TableName END
 ORDER BY
 	CASE @Sort
@@ -94,4 +94,3 @@ ORDER BY
 OPTION(RECOMPILE)
 GO
 --*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
-

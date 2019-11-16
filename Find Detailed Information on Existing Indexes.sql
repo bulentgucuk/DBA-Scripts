@@ -18,6 +18,7 @@ SELECT
 	sys.objects.object_id, 
 	sys.objects.name AS object_name,
 	sys.indexes.index_id, ISNULL(sys.indexes.name, '---') AS index_name,
+	partitions.data_compression_desc,
 	partitions.Rows, partitions.SizeMB, IndexProperty(sys.objects.object_id,
 	sys.indexes.name, 'IndexDepth') AS IndexDepth,
 	sys.indexes.type, sys.indexes.type_desc, sys.indexes.fill_factor,
@@ -50,10 +51,11 @@ FROM
 	JOIN sys.indexes ON sys.indexes.object_id=sys.objects.object_id
 	JOIN (
 		SELECT
-			object_id, index_id, SUM(row_count) AS Rows,
-			CONVERT(numeric(19,3), CONVERT(numeric(19,3), SUM(in_row_reserved_page_count+lob_reserved_page_count+row_overflow_reserved_page_count))/CONVERT(numeric(19,3), 128)) AS SizeMB
-		FROM sys.dm_db_partition_stats
-		GROUP BY object_id, index_id
+			ps.object_id, ps.index_id, p.data_compression_desc,SUM(ps.row_count) AS Rows,
+			CONVERT(numeric(19,3), CONVERT(numeric(19,3), SUM(ps.in_row_reserved_page_count+ps.lob_reserved_page_count+ps.row_overflow_reserved_page_count))/CONVERT(numeric(19,3), 128)) AS SizeMB
+		FROM sys.dm_db_partition_stats AS ps
+			INNER JOIN sys.partitions AS p ON p.object_id = ps.object_id AND p.index_id = ps.index_id AND p.partition_id = ps.partition_id AND p.partition_number = ps.partition_number
+		GROUP BY ps.object_id, ps.index_id, P.data_compression_desc
 	) AS partitions ON sys.indexes.object_id=partitions.object_id AND sys.indexes.index_id=partitions.index_id
 	CROSS APPLY (
 		SELECT

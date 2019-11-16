@@ -22,7 +22,7 @@ DECLARE @T TABLE (
 	)
 
 INSERT INTO @T (Name, FileName)
-SELECT	'(name = ' + name + ',' ,
+SELECT	'(name = ' + QUOTENAME(name) + ',' ,
 		'Filename = ''' + REPLACE(REPLACE(physical_name, '.mdf','.SS'),'.ndf','.SS') + '''),'
 FROM	sys.database_files
 WHERE	type = 0
@@ -46,7 +46,7 @@ WHILE @InitRowId <= @MaxRowId
 		SELECT	@InitRowId = @InitRowId + 1;
 	END
 
-SELECT	@SqlCmd = 'CREATE DATABASE ' + @SnapShotDBName + ' ON ' + CHAR(13)+@SqlCmd + 'AS SNAPSHOT OF ' + @SourceDBName + ';'
+SELECT	@SqlCmd = 'CREATE DATABASE ' + QUOTENAME(@SnapShotDBName) + ' ON ' + CHAR(13)+@SqlCmd + 'AS SNAPSHOT OF ' + QUOTENAME(@SourceDBName) + ';'
 
 PRINT @SqlCmd;
-EXEC (@SqlCmd);
+EXEC sp_executesql @stmt = @SqlCmd;

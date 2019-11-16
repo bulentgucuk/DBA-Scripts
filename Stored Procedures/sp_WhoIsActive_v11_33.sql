@@ -11,18 +11,15 @@ IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_NAME = 's
 GO
 
 /*********************************************************************************************
-Who Is Active? v11.32 (2018-07-03)
-(C) 2007-2018, Adam Machanic
+Who Is Active? v11.33 (2019-07-28)
+(C) 2007-2019, Adam Machanic
 
 Feedback: mailto:adam@dataeducation.com
 Updates: http://whoisactive.com
 Blog: http://dataeducation.com
 
 License: 
-	Who is Active? is free to download and use for personal, educational, and internal 
-	corporate purposes, provided that this header is preserved. Redistribution or sale 
-	of Who is Active?, in whole or in part, is prohibited without the author's express 
-	written consent.
+	https://github.com/amachanic/sp_whoisactive/blob/master/LICENSE
 *********************************************************************************************/
 ALTER PROC dbo.sp_WhoIsActive
 (
@@ -547,13 +544,13 @@ BEGIN;
 		a0 AS
 		(SELECT 1 AS n UNION ALL SELECT 1),
 		a1 AS
-		(SELECT 1 AS n FROM a0 AS a, a0 AS b),
+		(SELECT 1 AS n FROM a0 AS a CROSS JOIN a0 AS b),
 		a2 AS
-		(SELECT 1 AS n FROM a1 AS a, a1 AS b),
+		(SELECT 1 AS n FROM a1 AS a CROSS JOIN a1 AS b),
 		a3 AS
-		(SELECT 1 AS n FROM a2 AS a, a2 AS b),
+		(SELECT 1 AS n FROM a2 AS a CROSS JOIN a2 AS b),
 		a4 AS
-		(SELECT 1 AS n FROM a3 AS a, a3 AS b),
+		(SELECT 1 AS n FROM a3 AS a CROSS JOIN a3 AS b),
 		numbers AS
 		(
 			SELECT TOP(LEN(@header) - 1)
@@ -582,13 +579,13 @@ BEGIN;
 		a0 AS
 		(SELECT 1 AS n UNION ALL SELECT 1),
 		a1 AS
-		(SELECT 1 AS n FROM a0 AS a, a0 AS b),
+		(SELECT 1 AS n FROM a0 AS a CROSS JOIN a0 AS b),
 		a2 AS
-		(SELECT 1 AS n FROM a1 AS a, a1 AS b),
+		(SELECT 1 AS n FROM a1 AS a CROSS JOIN a1 AS b),
 		a3 AS
-		(SELECT 1 AS n FROM a2 AS a, a2 AS b),
+		(SELECT 1 AS n FROM a2 AS a CROSS JOIN a2 AS b),
 		a4 AS
-		(SELECT 1 AS n FROM a3 AS a, a3 AS b),
+		(SELECT 1 AS n FROM a3 AS a CROSS JOIN a3 AS b),
 		numbers AS
 		(
 			SELECT TOP(LEN(@params) - 1)
@@ -677,13 +674,13 @@ BEGIN;
 		a0 AS
 		(SELECT 1 AS n UNION ALL SELECT 1),
 		a1 AS
-		(SELECT 1 AS n FROM a0 AS a, a0 AS b),
+		(SELECT 1 AS n FROM a0 AS a CROSS JOIN a0 AS b),
 		a2 AS
-		(SELECT 1 AS n FROM a1 AS a, a1 AS b),
+		(SELECT 1 AS n FROM a1 AS a CROSS JOIN a1 AS b),
 		a3 AS
-		(SELECT 1 AS n FROM a2 AS a, a2 AS b),
+		(SELECT 1 AS n FROM a2 AS a CROSS JOIN a2 AS b),
 		a4 AS
-		(SELECT 1 AS n FROM a3 AS a, a3 AS b),
+		(SELECT 1 AS n FROM a3 AS a CROSS JOIN a3 AS b),
 		numbers AS
 		(
 			SELECT TOP(LEN(@outputs) - 1)
@@ -814,13 +811,13 @@ BEGIN;
 	a0 AS
 	(SELECT 1 AS n UNION ALL SELECT 1),
 	a1 AS
-	(SELECT 1 AS n FROM a0 AS a, a0 AS b),
+	(SELECT 1 AS n FROM a0 AS a CROSS JOIN a0 AS b),
 	a2 AS
-	(SELECT 1 AS n FROM a1 AS a, a1 AS b),
+	(SELECT 1 AS n FROM a1 AS a CROSS JOIN a1 AS b),
 	a3 AS
-	(SELECT 1 AS n FROM a2 AS a, a2 AS b),
+	(SELECT 1 AS n FROM a2 AS a CROSS JOIN a2 AS b),
 	a4 AS
-	(SELECT 1 AS n FROM a3 AS a, a3 AS b),
+	(SELECT 1 AS n FROM a3 AS a CROSS JOIN a3 AS b),
 	numbers AS
 	(
 		SELECT TOP(LEN(@output_column_list))
@@ -1059,13 +1056,13 @@ BEGIN;
 	a0 AS
 	(SELECT 1 AS n UNION ALL SELECT 1),
 	a1 AS
-	(SELECT 1 AS n FROM a0 AS a, a0 AS b),
+	(SELECT 1 AS n FROM a0 AS a CROSS JOIN a0 AS b),
 	a2 AS
-	(SELECT 1 AS n FROM a1 AS a, a1 AS b),
+	(SELECT 1 AS n FROM a1 AS a CROSS JOIN a1 AS b),
 	a3 AS
-	(SELECT 1 AS n FROM a2 AS a, a2 AS b),
+	(SELECT 1 AS n FROM a2 AS a CROSS JOIN a2 AS b),
 	a4 AS
-	(SELECT 1 AS n FROM a3 AS a, a3 AS b),
+	(SELECT 1 AS n FROM a3 AS a CROSS JOIN a3 AS b),
 	numbers AS
 	(
 		SELECT TOP(LEN(@sort_order))

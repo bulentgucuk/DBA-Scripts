@@ -33,7 +33,7 @@ DECLARE @T TABLE (
 	)
 
 INSERT INTO @T (Name, FileName)
-SELECT	'(name = ' + name + ', ' ,
+SELECT	'(name = ' + QUOTENAME(name) + ', ' ,
 		--'Filename = ''' + REPLACE(REPLACE(physical_name, '.mdf','.SS'),'.ndf','.SS') + '''),'
 		'Filename = ''' + REPLACE(REPLACE(physical_name, '.mdf', @SnapShotTime + '.SS'),'.ndf', @SnapShotTime +'.SS') + '''),'
 FROM	sys.database_files
@@ -41,7 +41,7 @@ WHERE	type = 0 ;
 
 DECLARE	@RowId INT,
 		@MaxRowID INT,
-		@Str VARCHAR(MAX)
+		@Str NVARCHAR(4000)
 
 SELECT	@MaxRowID = MAX(RowId),
 		@RowId = 1
@@ -53,7 +53,7 @@ SET		FileName = REPLACE(FileName, '),' , ') ')
 WHERE	RowId = @MaxRowID ;
 
 -- START BUILDING THE DYNAMIC STRING TO EXECUTE
-SELECT	@Str = 'CREATE DATABASE ' + @SnapshotDbName + '_SnapShot' + @SnapShotTime + ' ON ' + CHAR(13);
+SELECT	@Str = 'CREATE DATABASE ' + QUOTENAME(@SnapshotDbName + '_SnapShot' + @SnapShotTime) + ' ON ' + CHAR(13);
 
 WHILE	@RowId <= @MaxRowID
 	BEGIN
@@ -63,7 +63,7 @@ WHILE	@RowId <= @MaxRowID
 		SELECT	@RowId = @RowId + 1 ;
 	END
 
-SELECT	@Str = @Str + 'AS SNAPSHOT OF ' + @SnapshotDbName ;
+SELECT	@Str = @Str + 'AS SNAPSHOT OF ' + QUOTENAME(@SnapshotDbName) ;
 
 PRINT @STR ;
-EXEC (@STR) ;
+EXEC sp_executesql @stmt = @STR;

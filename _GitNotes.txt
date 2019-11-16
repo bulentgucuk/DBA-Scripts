@@ -19,6 +19,9 @@ git branch -v
 -- Checkout new local branch -q suppresses the stderr from git
 git checkout BranchTest1 -q
 
+-- Checkout to remote branch with tracking localy (The branch does not exists locally)
+git checkout --track origin/20190704_SSBDataCICommon_InitialLookupData
+
 -- List remote branches
 git branch -r
 

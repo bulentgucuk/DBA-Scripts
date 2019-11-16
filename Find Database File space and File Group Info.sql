@@ -15,11 +15,3 @@ FROM	sys.database_files AS dbf
 		ON dbf.data_space_id = dbfg.data_space_id
 ORDER BY dbf.type_desc DESC, dbf.file_id
 OPTION(RECOMPILE);
-
--- configured size for Tempdb
-SELECT 
-name, file_id, type_desc, size * 8 / 1024 [TempdbSizeInMB]
-FROM sys.master_files
-WHERE DB_NAME(database_id) = 'tempdb'
-ORDER BY type_desc DESC, file_id
-OPTION(RECOMPILE);
