@@ -45,4 +45,4 @@ and		FileId <> 2
 group by DatabaseName
 order by DatabaseName
 
--- DROP TABLE #DbSize
+DROP TABLE #DbSize

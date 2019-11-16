@@ -19,6 +19,9 @@ git branch -v
 -- Checkout new local branch -q suppresses the stderr from git
 git checkout BranchTest1 -q
 
+-- Checkout to remote branch with tracking localy (The branch does not exists locally)
+git checkout --track origin/20190704_SSBDataCICommon_InitialLookupData
+
 -- List remote branches
 git branch -r
 
@@ -85,14 +88,14 @@ git branch --unset-upstream
 --Pay attention to command line changes from [BranchTest1 ≡]>  to [BranchTest1]> 
 
 --delete local branch
-git brach -d BranchTest1
+git branch -d BranchTest1
 
 --delete remote branch
 git push origin --delete BranchTest1
 
 
 -- Fetch and show local and remote branches with base numbers
-git fetch
+git fetch --all
 git branch -v
 git branch -v -r
 
