@@ -17,7 +17,7 @@ SELECT
 	sys.schemas.name AS schema_name,
 	sys.objects.object_id, 
 	sys.objects.name AS object_name,
-	sys.indexes.index_id, ISNULL(sys.indexes.name, '---') AS index_name,
+	sys.indexes.index_id, ISNULL(sys.indexes.name, '---') AS index_name, sys.indexes.is_disabled,
 	partitions.data_compression_desc,
 	partitions.Rows, partitions.SizeMB, IndexProperty(sys.objects.object_id,
 	sys.indexes.name, 'IndexDepth') AS IndexDepth,
