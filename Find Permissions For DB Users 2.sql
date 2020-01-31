@@ -1,5 +1,3 @@
-USE Falcons;
-
 --https://stackoverflow.com/questions/7048839/sql-server-query-to-find-all-permissions-access-for-all-users-in-a-database
 
 DECLARE @p_userName NVARCHAR(5) = '' -- Specify up to five characters here (or none for all users)
