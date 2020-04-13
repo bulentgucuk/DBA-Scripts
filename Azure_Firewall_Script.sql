@@ -7,7 +7,7 @@ ORDER BY name;
 
 /***
 DECLARE	@name NVARCHAR (128) = 'bgucuk_ssbinfo.com_home_office';
-DECLARE @start_ip_address VARCHAR(50) = '71.211.228.224';
+DECLARE @start_ip_address VARCHAR(50) = '71.211.233.191';
 DECLARE	@end_ip_address VARCHAR(50);
 
 EXEC sp_set_firewall_rule 
