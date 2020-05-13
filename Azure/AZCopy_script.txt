@@ -1,0 +1,18 @@
+Article: AzCopy Script
+
+azcopy login --tenant-id "<YOUR TENANT ID>"
+
+
+azcopy make "https://<YOUR STORAGE ACCOUNT NAME>.blob.core.windows.net/testcontainer"
+
+
+azcopy copy "C:\Images\*" "https://<YOUR STORAGE ACCOUNT NAME>.core.windows.net/testcontainer/"
+
+
+Append the --recursive flag to upload files in all sub-directories.
+
+
+COPY CONTAINER FROM ONE STORAGE ACCOUNT TO ANOTHER
+
+
+azcopy copy "https://<YOUR STORAGE ACCOUNT NAME>.blob.core.windows.net/?<SAS-token>" "https://<YOUR TARGET STORAGE ACCOUNT NAME>.blob.core.windows.net/" --recursive"

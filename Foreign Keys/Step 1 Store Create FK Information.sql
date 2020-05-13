@@ -1,5 +1,5 @@
 USE MYDATABASE -- CHANGE THE NAME OF THE DB
-SET NOCOUNT ON
+SET NOCOUNT ON;
  
 -- STORE FK CREATE STATEMENT TO TABLE
 SET NOCOUNT ON;
@@ -7,6 +7,7 @@ DECLARE @schema_name sysname;
 DECLARE @table_name sysname;
 DECLARE @constraint_name sysname;
 DECLARE @constraint_object_id int;
+DECLARE @referenced_object_schemaname sysname;
 DECLARE @referenced_object_name sysname;
 DECLARE @is_disabled bit;
 DECLARE @is_not_for_replication bit;
@@ -42,7 +43,7 @@ CREATE TABLE dbo.FKCreate (
 
 DECLARE FKcursor CURSOR FOR
     select OBJECT_SCHEMA_NAME(parent_object_id)
-         , OBJECT_NAME(parent_object_id), name, OBJECT_NAME(referenced_object_id)
+         , OBJECT_NAME(parent_object_id), name, OBJECT_SCHEMA_NAME(referenced_object_id), OBJECT_NAME(referenced_object_id)
          , object_id
          , is_disabled, is_not_for_replication, is_not_trusted
          , delete_referential_action, update_referential_action
@@ -52,7 +53,7 @@ DECLARE FKcursor CURSOR FOR
 OPEN FKcursor;
 
 FETCH NEXT FROM FKcursor INTO @schema_name, @table_name, @constraint_name
-    , @referenced_object_name, @constraint_object_id
+    , @referenced_object_schemaname, @referenced_object_name, @constraint_object_id
     , @is_disabled, @is_not_for_replication, @is_not_trusted
     , @delete_referential_action, @update_referential_action;
 
@@ -104,7 +105,7 @@ BEGIN
         CLOSE ColumnCursor;
         DEALLOCATE ColumnCursor;
 
-        SET @tsql = @tsql + ' ) REFERENCES ' + QUOTENAME(@schema_name) + '.' + QUOTENAME(@referenced_object_name)
+        SET @tsql = @tsql + ' ) REFERENCES ' + QUOTENAME(@referenced_object_schemaname) + '.' + QUOTENAME(@referenced_object_name)
                   + ' (' + @tsql2 + ')';
         SET @tsql = @tsql
                   + ' ON UPDATE ' + CASE @update_referential_action
@@ -142,7 +143,7 @@ BEGIN
         --PRINT @tsql;
         END;
     FETCH NEXT FROM FKcursor INTO @schema_name, @table_name, @constraint_name
-        , @referenced_object_name, @constraint_object_id
+        , @referenced_object_schemaname, @referenced_object_name, @constraint_object_id
         , @is_disabled, @is_not_for_replication, @is_not_trusted
         , @delete_referential_action, @update_referential_action;
 END;

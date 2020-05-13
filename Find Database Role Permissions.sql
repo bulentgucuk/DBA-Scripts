@@ -1,13 +1,13 @@
 -- Change the database context
 -- Prints the script to create the existing role, permissions and members
-DECLARE @roleName VARCHAR(255)
-SET @roleName = 'db_SSBDeveloper'
+DECLARE @roleName VARCHAR(255);
+SET @roleName = 'db_apiETL';
 
 -- Script out the Role
-DECLARE @roleDesc VARCHAR(MAX), @crlf VARCHAR(2)
-SET @crlf = CHAR(13) + CHAR(10)
+DECLARE @roleDesc VARCHAR(MAX), @crlf VARCHAR(2);
+SET @crlf = CHAR(13) + CHAR(10);
 --SET @roleDesc = 'CREATE ROLE [' + @roleName + '];' + @crlf + 'GO' + @crlf + @crlf
-SET @roleDesc = 'IF DATABASE_PRINCIPAL_ID('+'''' + @roleName + ''''+') IS NULL' + @crlf + 'CREATE ROLE ' + QUOTENAME(@roleName) + ' AUTHORIZATION dbo;' + @crlf + 'GO' + @crlf + @crlf
+SET @roleDesc = 'IF DATABASE_PRINCIPAL_ID('+'''' + @roleName + ''''+') IS NULL' + @crlf + 'CREATE ROLE ' + QUOTENAME(@roleName) + ' AUTHORIZATION dbo;' + @crlf + 'GO' + @crlf + @crlf;
 
 SELECT    @roleDesc = @roleDesc +
         CASE dp.state
@@ -60,10 +60,12 @@ SELECT    @roleDesc = @roleDesc +
          + 'TO [' + @roleName + '];' + 
          CASE dp.state WHEN 'W' THEN ' WITH GRANT OPTION;' ELSE '' END + @crlf
 FROM    sys.database_permissions dp
-WHERE    USER_NAME(dp.grantee_principal_id) IN (@roleName)
+--WHERE    USER_NAME(dp.grantee_principal_id) IN (@roleName)
+WHERE    dp.grantee_principal_id = (SELECT principal_id FROM sys.database_principals WHERE name = @roleName)
 GROUP BY dp.state, dp.major_id, dp.permission_name, dp.class
+ORDER BY SCHEMA_NAME(dp.major_id), dp.state, dp.permission_name;
 
-SELECT @roleDesc = @roleDesc + 'GO' + @crlf + @crlf
+SELECT @roleDesc = @roleDesc + 'GO' + @crlf + @crlf;
 
 -- Display users within Role.  Code stubbed by Joe Spivey
 --SELECT  @roleDesc = @roleDesc + 'EXECUTE sp_AddRoleMember ''' + roles.name + ''', ''' + users.name + '''' + @crlf
@@ -73,19 +75,19 @@ FROM    sys.database_principals users
             ON link.member_principal_id = users.principal_id
         INNER JOIN sys.database_principals roles 
             ON roles.principal_id = link.role_principal_id
-WHERE   roles.name = @roleName
+WHERE   roles.name = @roleName;
 
 -- PRINT out in blocks of up to 8000 based on last \r\n
-DECLARE @printCur INT
-SET @printCur = 8000
+DECLARE @printCur INT;
+SET @printCur = 8000;
 
 WHILE LEN(@roleDesc) > 8000
 BEGIN
     -- Reverse first 8000 characters and look for first lf cr (reversed crlf) as delimiter
-    SET @printCur = 8000 - CHARINDEX(CHAR(10) + CHAR(13), REVERSE(SUBSTRING(@roleDesc, 0, 8000)))
+    SET @printCur = 8000 - CHARINDEX(CHAR(10) + CHAR(13), REVERSE(SUBSTRING(@roleDesc, 0, 8000)));
 
-    PRINT LEFT(@roleDesc, @printCur)
-    SELECT @roleDesc = RIGHT(@roleDesc, LEN(@roleDesc) - @printCur)
+    PRINT LEFT(@roleDesc, @printCur);
+    SELECT @roleDesc = RIGHT(@roleDesc, LEN(@roleDesc) - @printCur);
 END
 
 PRINT @RoleDesc + 'GO'
