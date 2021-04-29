@@ -1,8 +1,8 @@
-SELECT	 resource_type
+SELECT	 l.resource_type
 		,(CASE
-			WHEN resource_type = 'OBJECT' THEN object_name(resource_associated_entity_id)
-			WHEN resource_type IN ('DATABASE', 'FILE', 'METADATA') THEN 'N/A'
-			WHEN resource_type IN ('KEY', 'PAGE', 'RID') THEN (
+			WHEN l.resource_type = 'OBJECT' THEN object_name(l.resource_associated_entity_id)
+			WHEN l.resource_type IN ('DATABASE', 'FILE', 'METADATA') THEN 'N/A'
+			WHEN l.resource_type IN ('KEY', 'PAGE', 'RID') THEN (
 													SELECT
 													object_name(object_id)
 													FROM
@@ -12,10 +12,12 @@ SELECT	 resource_type
 		 ELSE	'Undefined'
 		 END) AS resource_name
 		,request_mode as lock_type
-		,resource_description
+		,l.resource_description
 		,request_status
 		,request_session_id
 		,request_owner_id AS transaction_id
-
-FROM	sys.dm_tran_locks
-WHERE	resource_type <> 'DATABASE';
+		,s.name as database_name
+FROM	sys.dm_tran_locks as l
+	INNER JOIN sys.databases as s ON l.resource_database_id = s.database_id
+WHERE	l.resource_type <> 'DATABASE'
+OPTION(RECOMPILE);

@@ -10,14 +10,14 @@ SELECT
 	, bus.backup_start_date
 	, bus.backup_finish_date
 	, DATEDIFF(minute, bus.backup_start_date, bus.backup_finish_date) AS 'MinutesTookToBackup'
-	, Bf.physical_device_name
+	, Bmf.physical_device_name
+	, CAST(((bus.backup_size / 1024) / 1024) AS NUMERIC(20,2)) AS backup_size_in_MB
+	, CAST(((bus.compressed_backup_size / 1024) / 1024) AS NUMERIC(20,2)) AS compressed_backup_size_in_MB
 FROM	sys.databases sdb
 	LEFT OUTER JOIN msdb.dbo.backupset bus ON bus.database_name = sdb.name
-	--LEFT OUTER JOIN msdb.dbo.backupfile AS BF ON bus.backup_set_id = bf.backup_set_id
-	LEFT OUTER JOIN msdb.dbo.backupmediafamily as bf on bus.backup_set_id = bf.media_set_id
-WHERE	sdb.Name = 'usatriathlon'
-AND		bus.backup_finish_date > '20200501'
---AND		bf.physical_device_name NOT LIKE '{%'
+	LEFT OUTER JOIN msdb.dbo.backupmediafamily as bmf on bus.media_set_id = bmf.media_set_id
+	LEFT OUTER JOIN msdb.dbo.backupmediaset AS bms ON bmf.media_set_id = bms.media_set_id
+WHERE	bus.backup_finish_date > '20210217'
 AND		bus.type = 'D'
 ORDER BY sdb.Name, bus.backup_finish_date DESC
 OPTION(RECOMPILE);

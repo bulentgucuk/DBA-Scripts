@@ -1,0 +1,7 @@
+--- dbatools powershell how to use sql authentication to SQL Server -----------------------------------
+$sqlcred = get-credential bulent
+$server = Connect-DbaSqlServer -SqlInstance servername -Credential $sqlcred
+Copy-DbaAgentOperator -Source $server -Destination servername -WhatIf
+Copy-DbaAgentOperator -Source $server -Destination servername
+
+Copy-DbaAgentProxyAccount -Source $server -Destination servername
