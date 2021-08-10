@@ -1,7 +1,11 @@
 -- Find SQL Server Agent Job Execution Information
 SELECT 
-    [sJOB].[job_id] AS [JobID]
-    , [sJOB].[name] AS [JobName]
+      [sJOB].[name] AS [JobName]
+	, SUSER_SNAME([sJOB].owner_sid) AS JobOwner
+	, [sJOB].date_created
+	, [sJOB].enabled
+	, [sCat].name AS CategoryName
+	, [sJOB].description
     , CASE 
         WHEN [sJOBH].[run_date] IS NULL OR [sJOBH].[run_time] IS NULL THEN NULL
         ELSE CAST(
@@ -39,6 +43,7 @@ SELECT
       END AS [NextRunDateTime]
 FROM 
     [msdb].[dbo].[sysjobs] AS [sJOB]
+	INNER JOIN [msdb].[dbo].[syscategories] AS [sCat] ON [sJOB].category_id = [sCat].category_id
     LEFT JOIN (
                 SELECT
                     [job_id]
@@ -66,3 +71,4 @@ FROM
         ON [sJOB].[job_id] = [sJOBH].[job_id]
         AND [sJOBH].[RowNumber] = 1
 ORDER BY [JobName]
+OPTION(RECOMPILE);
