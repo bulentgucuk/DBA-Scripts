@@ -1,0 +1,33 @@
+/** DYNAMICALLY RUN DBCC CHECKDB  **/
+SET NOCOUNT ON;
+DECLARE	@RowId TINYINT,
+		@DbName SYSNAME,
+		@Str NVARCHAR(256);
+DECLARE	@DbNames TABLE(
+		RowId TINYINT IDENTITY (1,1),
+		DbName SYSNAME
+		);
+
+INSERT INTO @DbNames
+SELECT	Name
+FROM	SYS.DATABASES
+WHERE	Is_Read_Only = 0
+AND		State_Desc = 'ONLINE'
+AND		Name NOT IN ('Tempdb')
+ORDER BY Name DESC;
+
+SELECT	@RowId = MAX(RowId) FROM @DbNames
+WHILE	@RowId > 0
+	BEGIN
+		SELECT	@DbName = QUOTENAME(DbName)
+		FROM	@DbNames
+		WHERE	RowId = @RowId;
+
+		PRINT	(@DBNAME);
+		
+		SELECT	@Str = 'USE ' + @DbName + CHAR(13) +'DBCC CHECKDB WITH NO_INFOMSGS;';
+		PRINT	(@STR);
+		EXEC sp_executesql @stmt = @Str;
+		SELECT	@RowId = @RowId - 1;
+	END
+GO
